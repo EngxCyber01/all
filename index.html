@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SE Review Hub - Modern academic subject platform">
+    <title>SE Review Hub | Academic Excellence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: default !important;
+            outline: none !important;
+        }
+
+        html, body, div, p, h1, h2, h3, h4, h5, h6, span, section, article, header, footer, nav, main {
+            cursor: default !important;
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+        }
+
+        * {
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+            caret-color: transparent !important;
+        }
+
+        *:focus {
+            outline: none !important;
+            caret-color: transparent !important;
+        }
+
+        a, button, .subject-card, .nav-link, .cta-primary, .cta-secondary, .subject-button, .theme-toggle, .scroll-indicator, .logo, .footer-links a, .hero-cta a, .hero-badge {
+            cursor: pointer !important;
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+        }
+
+        ::selection {
+            background: transparent !important;
+            color: inherit !important;
+        }
+
+        ::-moz-selection {
+            background: transparent !important;
+            color: inherit !important;
+        }
+
+        body, body * {
+            cursor: default !important;
+            caret-color: transparent !important;
+        }
+
+        a:hover, button:hover, [role="button"]:hover, .cta-primary:hover, .cta-secondary:hover {
+            cursor: pointer !important;
+        }
+
+        :root {
+            --bg-main: #000000;
+            --bg-card: #0d0d0d;
+            --text-primary: #ffffff;
+            --text-secondary: #888888;
+            --text-tertiary: #555555;
+            --accent-cyan: #00f5ff;
+            --accent-magenta: #ff006e;
+            --accent-yellow: #ffbe0b;
+            --accent-green: #06ffa5;
+            --glow-cyan: rgba(0, 245, 255, 0.6);
+            --glow-magenta: rgba(255, 0, 110, 0.6);
+        }
+
+        body {
+            font-family: 'Space Grotesk', 'Courier New', monospace;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-main);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 245, 255, 0.03) 2px, rgba(0, 245, 255, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 0, 110, 0.03) 2px, rgba(255, 0, 110, 0.03) 4px);
+            pointer-events: none;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+            padding: 20px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px var(--glow-cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px var(--glow-cyan);
+        }
+
+        /* Hero Section */
+        header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 50px;
+            color: var(--accent-cyan);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 var(--glow-cyan); }
+            50% { box-shadow: 0 0 30px 10px transparent; }
+        }
+
+        .hero-title {
+            font-size: 6rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+            letter-spacing: -3px;
+            line-height: 1;
+            animation: glitchText 5s infinite;
+        }
+
+        .hero-title .highlight {
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta), var(--accent-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(45deg); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .cta-primary, .cta-secondary {
+            padding: 18px 40px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-primary {
+            background: var(--accent-cyan);
+            color: var(--bg-main);
+            box-shadow: 0 0 30px var(--glow-cyan);
+        }
+
+        .cta-primary:hover {
+            box-shadow: 0 0 50px var(--glow-cyan);
+            transform: translateY(-3px);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--accent-magenta);
+            border: 2px solid var(--accent-magenta);
+        }
+
+        .cta-secondary:hover {
+            background: var(--accent-magenta);
+            color: var(--bg-main);
+            box-shadow: 0 0 30px var(--glow-magenta);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        .scroll-indicator span {
+            font-size: 2rem;
+            color: var(--accent-cyan);
+        }
+
+        /* Main Content */
+        main {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .subject-card {
+            background: var(--bg-card);
+            border: 2px solid transparent;
+            padding: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .subject-card:nth-child(1) { border-color: var(--accent-cyan); }
+        .subject-card:nth-child(2) { border-color: var(--accent-magenta); }
+        .subject-card:nth-child(3) { border-color: var(--accent-yellow); }
+        .subject-card:nth-child(4) { border-color: var(--accent-green); }
+
+        .subject-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 245, 255, 0.3);
+        }
+
+        .subject-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-number {
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--text-tertiary);
+            opacity: 0.3;
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            z-index: 0;
+        }
+
+        .subject-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .subject-title {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .subject-card:nth-child(1) .subject-title { color: var(--accent-cyan); }
+        .subject-card:nth-child(2) .subject-title { color: var(--accent-magenta); }
+        .subject-card:nth-child(3) .subject-title { color: var(--accent-yellow); }
+        .subject-card:nth-child(4) .subject-title { color: var(--accent-green); }
+
+        .subject-description {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .subject-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .meta-badge {
+            padding: 5px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--text-tertiary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+        }
+
+        .subject-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 35px;
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--text-primary);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card:nth-child(1) .subject-button { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+        .subject-card:nth-child(2) .subject-button { border-color: var(--accent-magenta); color: var(--accent-magenta); }
+        .subject-card:nth-child(3) .subject-button { border-color: var(--accent-yellow); color: var(--accent-yellow); }
+        .subject-card:nth-child(4) .subject-button { border-color: var(--accent-green); color: var(--accent-green); }
+
+        .subject-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .subject-card:nth-child(1) .subject-button::before { background: var(--accent-cyan); }
+        .subject-card:nth-child(2) .subject-button::before { background: var(--accent-magenta); }
+        .subject-card:nth-child(3) .subject-button::before { background: var(--accent-yellow); }
+        .subject-card:nth-child(4) .subject-button::before { background: var(--accent-green); }
+
+        .subject-button:hover::before {
+            left: 0;
+        }
+
+        .subject-button:hover {
+            color: var(--bg-main);
+        }
+
+        .arrow-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .subject-button:hover .arrow-icon {
+            transform: translateX(5px);
+        }
+
+        /* Footer */
+        footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid rgba(0, 245, 255, 0.2);
+            position: relative;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand h3 {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .footer-section h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px var(--glow-cyan);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes glitchText {
+            0%, 90%, 100% { transform: translate(0); }
+            91% { transform: translate(-2px, -2px); }
+            92% { transform: translate(2px, 2px); }
+            93% { transform: translate(-2px, 2px); }
+            94% { transform: translate(2px, -2px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .subjects-grid {
+                gap: 20px;
+            }
+
+            .subject-card {
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .hero-title {
+                font-size: 4rem;
+            }
+
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .nav-content {
+                padding: 0 30px;
+            }
+
+            .container {
+                padding: 0 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .subject-card {
+                padding: 35px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .nav-link {
+                font-size: 0.8rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-primary, .cta-secondary {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.2rem;
+                letter-spacing: -1px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .subject-title {
+                font-size: 1.5rem;
+            }
+
+            .subject-card {
+                padding: 30px;
+            }
+
+            .card-number {
+                font-size: 3rem;
+            }
+
+            .nav-content {
+                padding: 0 20px;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-cyan);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-magenta);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <div class="logo">SE//HUB</div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#subjects" class="nav-link">Subjects</a>
+                <a href="#about" class="nav-link">About</a>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">ACADEMIC EXCELLENCE</div>
+                <h1 class="hero-title">
+                 Software Engineering<span class="highlight"><br/></span>
+                </h1>
+                <p class="hero-subtitle">
+                    Comprehensive summaries and resources for core  Software Engineering subjects. 
+                </p>
+                <div class="hero-cta">
+                    <a href="#subjects" class="cta-primary">EXPLORE SUBJECTS</a>
+                    <a href="#about" class="cta-secondary">LEARN MORE</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="subjects">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">CORE SUBJECTS</h2>
+                <p class="section-subtitle">Essential SE topiSE, condensed for maximum efficiency</p>
+            </div>
+
+            <div class="subjects-grid">
+                <article class="subject-card">
+                    <div class="card-number">01</div>
+                    <span class="subject-icon">💻</span>
+                    <h3 class="subject-title">Software Principles</h3>
+                    <div class="subject-meta">
+                        <span class="meta-badge">FOUNDATIONAL</span>
+                    </div>
+                    <p class="subject-description">
+                        Explore fundamental software engineering concepts.
+                    </p>
+                    <a href="https://software-review.netlify.app/" target="_blank" rel="noopener noreferrer" class="subject-button">
+                        OPEN SUMMARY
+                        <span class="arrow-icon">→</span>
+                    </a>
+                </article>
+
+                <article class="subject-card">
+                    <div class="card-number">02</div>
+                    <span class="subject-icon">🌳</span>
+                    <h3 class="subject-title">Data Structures</h3>
+                    <div class="subject-meta">
+                        <span class="meta-badge">ESSENTIAL</span>
+                    </div>
+                    <p class="subject-description">
+                        Master arrays, linked lists, trees, graphs, hash tables, and their implementations. 
+                        Learn time and space complexity analysis.
+                    </p>
+                    <a href="https://ds-review.netlify.app/" target="_blank" rel="noopener noreferrer" class="subject-button">
+                        OPEN SUMMARY
+                        <span class="arrow-icon">→</span>
+                    </a>
+                </article>
+
+                <article class="subject-card">
+                    <div class="card-number">03</div>
+                    <span class="subject-icon">🗄️</span>
+                    <h3 class="subject-title">Database Systems</h3>
+                    <div class="subject-meta">
+                        <span class="meta-badge">PRACTICAL</span>
+                    </div>
+                    <p class="subject-description">
+                        Understand relational databases, normalization, transactions, SQL queries, 
+                        and NoSQL databases for effective data management.
+                    </p>
+                    <a href="https://db-review.netlify.app/" target="_blank" rel="noopener noreferrer" class="subject-button">
+                        OPEN SUMMARY
+                        <span class="arrow-icon">→</span>
+                    </a>
+                </article>
+
+                <article class="subject-card">
+                    <div class="card-number">04</div>
+                    <span class="subject-icon">🕸️</span>
+                    <h3 class="subject-title">Graph Theory</h3>
+                    <div class="subject-meta">
+                        <span class="meta-badge">ADVANCED</span>
+                    </div>
+                    <p class="subject-description">
+                        Study graph structures, traversal algorithms, shortest paths, minimum spanning trees, 
+                        and network flow problems with practical applications.
+                    </p>
+                    <a href="https://graph-theory.netlify.app/" target="_blank" rel="noopener noreferrer" class="subject-button">
+                        OPEN SUMMARY
+                        <span class="arrow-icon">→</span>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="about">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>SE//HUB</h3>
+                    <p>
+                        Your ultimate destination for Software Engineering subject summaries. 
+                        Designed for students, by students.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#subjects">Subjects</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://software-review.netlify.app/">Software</a></li>
+                        <li><a href="https://ds-review.netlify.app/">Data Structures</a></li>
+                        <li><a href="https://db-review.netlify.app/">Databases</a></li>
+                        <li><a href="https://graph-theory.netlify.app/">Graph Theory</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Academic Subject Summary Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for scroll indicator
+        document.querySelector('.scroll-indicator').addEventListener('click', () => {
+            document.querySelector('#subjects').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Smooth scroll for all nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        const nav = document.querySelector('nav');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+                nav.style.boxShadow = '0 5px 30px rgba(0, 245, 255, 0.2)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.8)';
+                nav.style.boxShadow = 'none';
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Card reveal animation on scroll
+        const cards = document.querySelectorAll('.subject-card');
+        
+        const revealCard = () => {
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                const cardBottom = card.getBoundingClientRect().bottom;
+                
+                if (cardTop < window.innerHeight - 100 && cardBottom > 0) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(50px)';
+                }
+            });
+        };
+
+        // Initial setup for cards
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px)';
+            card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+
+        window.addEventListener('scroll', revealCard);
+        window.addEventListener('load', revealCard);
+    </script>
+</body>
+</html>
